@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+
+	<insert id="writeBlog" parameterType="postvo">
+		<![CDATA[
+		insert
+		  into post
+		values (null, #{title }, #{contents }, now(), #{categoryNo	});
+		]]>
+	</insert>
+	
+	<select id="getPostCount" parameterType="string" resultType="map">
+		<![CDATA[
+		select b.category_no as categoryNo, ifnull(a.count, 0) as count
+		  from category b
+	      left outer join (select category_no, count(*) as count from post group by category_no) as a on a.category_no = b.category_no
+		 where b.blog_id = #{id  }
+		 group by b.category_no ;
+		]]>
+	</select>
+	
+	<update id="movetoDefault" parameterType="categoryvo">
+		<![CDATA[
+		update post
+	       set category_no = (select * from 
+	       						(select category_no from category 
+	       						  where name = "미분류") as a)
+		 where category_no = #{categoryNo }
+		]]>
+	</update>
+	
+	<delete id="deleteCategory" parameterType="categoryvo">
+		<![CDATA[
+		delete 
+	      from category
+		 where category_no = #{categoryNo } 
+		 and blog_id = #{blogId  }
+		]]>	
+	</delete>
+	
+	<insert id="insertNewCategory" parameterType="categoryvo">
+		<![CDATA[
+		insert  
+	      into category
+		values (null, #{name }, #{contents }, now(),  #{blogId  })
+		]]>	
+	</insert>
+	
+	<update id="modifyDefault" parameterType="blogvo">
+		<![CDATA[
+		update blog  
+	       set title = #{title },
+	       	   logo = #{logo  },
+	       	   path = #{path	}
+	     where blog_id = #{id	} 	   
+		]]>	
+	</update>
+	
+	<select id="getDefault" parameterType="string" resultType="blogvo">
+		<![CDATA[
+		select blog_id as id, title, logo, path
+		  from blog
+		 where blog_id = #{id  }
+		]]>
+	</select>
+</mapper>
