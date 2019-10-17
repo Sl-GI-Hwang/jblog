@@ -154,19 +154,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>jblog3</finalName>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>${project.basedir}/src/main/resources</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-	
 		<plugins>
-		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -194,18 +182,6 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-					
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<configuration>
-					<url>http://192.168.1.62/manager/text</url>
-					<path>/jblog3</path>
-					<username>admin</username>
-					<password>admin</password>
-				</configuration>
-			</plugin>
-			
 		</plugins>		
 	</build>  
 </project>
