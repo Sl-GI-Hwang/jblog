@@ -16,7 +16,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-	<finalName>jblog4</finalName>
+	<finalName>${artifactId}</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
@@ -33,7 +33,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
 					<url>http://192.168.1.62/manager/text</url>
-					<path>/jblog4</path>
+					<path>/${artifactId}</path>
 					<username>admin</username>
 					<password>admin</password>
 				</configuration>
